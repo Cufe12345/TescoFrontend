@@ -1,0 +1,118 @@
+.header{
+    color:#ff0000;
+    width: 100%;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: blue;
+    padding: 0 4%;
+    margin: 0;
+}
+.logo{
+    font-size: 2rem;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}
+.logo2{
+    object-fit: contain;
+}
+
+.menu1{
+    list-style: none;
+    /* margin-left: 5rem; */
+    padding: 0;
+    display: flex;
+    position: relative;
+}
+.header li{
+    /* margin-left: 3rem; */
+}
+.header a{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+}
+.header a:hover,
+.header a:active,
+.header a.active{
+    color: white;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 8px;
+}
+.b{
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold;
+    background: none;
+    border :none;
+}
+.b:hover,
+.b:active,
+.b.active{
+    color: white;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 8px;
+}
+.badge{
+    background-color: red;
+    color: white;
+    border-radius: 12px;
+    padding: 0 1rem;
+}
+.menuButton{
+    background: none;
+    margin-left: 1rem;
+    border: none;
+}
+.menuButton:hover{
+    filter: brightness(0) invert(0);
+}
+.button{
+    background: none;
+    border:none;
+    filter: brightness(0) invert(1);
+}
+.button:hover{
+    filter: brightness(0) invert(0);
+}
+.img{
+    filter: brightness(0) invert(1);
+}
+.search{
+    border-radius: 25px;
+    border: none;
+    
+    width:200px;
+    height: 30px;
+}
+
+nav {
+    display: flex;
+}
+
+nav ul {
+    margin: 0;
+}
+
+nav ul li {
+    margin: 0;
+    padding: 12px;
+}
+
+@media screen and (max-width: 24cm) {
+    .logo {
+        display: none;
+    }
+    nav {
+        flex-direction: column;
+    }
+    .header {
+        height: unset !important;
+    }
+}

@@ -1,0 +1,30 @@
+.li{
+    margin-left: 15px;
+    margin-top: 10px;
+    float: left; 
+    display: inline;  
+}
+.button{
+    background-color: blue;
+    border: none;
+}
+.button:hover{
+    background-color: red;
+}
+.title{
+    font-weight: bold;
+    font-size: large;
+}
+.price{
+    font-weight: bold;
+}
+
+.product {
+    object-fit: contain;
+}
+.buttonf{
+    background-color: red;
+}
+.buttong{
+    background-color: green;
+}

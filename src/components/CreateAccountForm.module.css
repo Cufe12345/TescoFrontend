@@ -1,0 +1,88 @@
+
+.Container{
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+/*Code for the card*/
+.CardOuter {
+    max-width: 500px;
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 40px;
+    
+    
+}
+.Card{
+    background-color: white;
+    padding:20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    border-radius: 25px;
+    box-shadow: 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+
+.usernameText{
+    padding-top:20px;
+}
+.PasswordTextC{
+    padding-top: 20px;
+}
+.PasswordText{
+   
+    padding-top: 20px;
+}
+.InputField{
+    border-radius: 4px;
+    border: 1px solid rgb(223, 223, 223);
+    width: 100%;
+    padding: 6px;
+}
+
+  .RegisterButton{
+    padding: 6px 16px;
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 5px;
+    background: linear-gradient(214deg, rgba(29,53,87,1) 0%, rgba(69,123,157,1) 100%);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    width:100px;
+    height:40px;
+    font-size: 17px;
+    
+  }
+  .Container{
+    display: flex;
+    align-items: flex-end;
+  }
+  .SubContainer{
+    padding-right: 10px;
+
+  }
+  .ErrorContainer{
+    background-color: #ffc0c7;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    border-radius: 25px;
+  }
+  .HideError{
+    display: none;
+  }
+  .SuccessContainer{
+    background-color: #4fff23;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    border-radius: 25px;
+  }
+    .HideSuccess{
+        display: none;
+    }
+  .Title{
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: bold;
+  }

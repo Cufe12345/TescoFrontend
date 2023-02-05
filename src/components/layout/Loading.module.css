@@ -1,0 +1,19 @@
+.loading{
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    background-size: 1px 2px;
+    animation: draw 2.5nps ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    fill:transparent;
+}
+.loading2{
+    width: clamp(10px,34vw,500px);
+    height: clamp(10px,10vw,800px);
+}
+@keyframes draw{
+    to{
+        stroke-dashoffset: 0;
+        fill: white;
+    }
+}

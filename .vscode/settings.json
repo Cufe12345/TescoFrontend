@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/4cccf484-d1e6-4e90-bdb9-703122a5a3a3/AppServices/subscriptions/4cccf484-d1e6-4e90-bdb9-703122a5a3a3/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/TescoAPI",
+  "appService.deploySubpath": "."
+}

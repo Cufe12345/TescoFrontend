@@ -1,0 +1,71 @@
+.sideBar{
+    right: 0;
+    width:180px;
+    height:100vh;
+    background-color:white;
+    border:solid black;
+    border-radius: 10px;
+    position:fixed;
+    top: 0px;
+
+}
+.loading{
+    display: flex;
+    justify-content: center;
+}
+.initial{
+    display: none;
+}
+@media screen and (max-width: 24cm){
+    .sideBar{
+        display: none;
+    }
+}
+.searchIcon{
+    width: clamp(1px,4vw,80px);
+    height: clamp(1px,4vw,80px);
+}
+.sideBarContent{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 700px;
+    margin: auto;
+    text-align: center;
+}
+.hide{
+    display: none;
+}
+.searchBar{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin-top: 5px;
+    
+}
+.search{
+    border-radius: 25px;
+    width:800px;
+    height: 50px;
+    font-size: x-large;
+    text-align: center;
+}
+
+.button{
+    background: none;
+    border:none;
+    filter: brightness(0) invert(1);
+}
+.button:hover{
+    filter: brightness(0) invert(0);
+}
+.orderText{
+    display: flex;
+    justify-content: center;
+}
+.orderText2{
+    display: flex;
+    justify-content: center;
+    border-radius: 10px;
+    background-color: white;
+    width:300px;
+}

@@ -1,0 +1,35 @@
+.li{
+    margin-top: 10px;
+    display:flex;
+    flex-direction: column;  
+    align-items: flex-end;
+}
+.button{
+    background-color: blue;
+    width: fit-content;
+    height: fit-content;
+    font-size: x-small;
+    border: none;
+    
+}
+.button:hover{
+    background-color: red;
+}
+.title{
+    font-weight: bold;
+    font-size: small;
+}
+.price{
+    font-weight: bold;
+    font-size: x-small;
+}
+
+.product {
+    object-fit: contain;
+}
+.buttonf{
+    background-color: red;
+}
+.buttong{
+    background-color: green;
+}

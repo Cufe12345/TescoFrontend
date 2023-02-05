@@ -1,0 +1,11 @@
+.search{
+    border-radius: 25px;
+    width:clamp(5px,79.95vw,1050px);
+    height: clamp(5px,3.95vw,1050px);
+    font-size: x-large;
+    text-align: center;
+}
+.div{
+    list-style: none;
+    
+}

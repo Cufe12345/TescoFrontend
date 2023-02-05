@@ -1,0 +1,120 @@
+.CardOuter {
+    max-width: 500px;
+    width: 80%;
+    margin: 0 auto;
+    padding-top: 40px;
+    
+    
+}
+
+/*Code for the card*/
+.Card{
+    background-color: white;
+    padding: 20px 40px;
+    border-radius: 5px;
+    box-shadow: 0 6px 20px 0 rgba(0,0,0,0.19);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/*Code for the Form itself ie ordering the items it contains*/
+.Form{
+
+
+}
+.EmailText{
+    padding-right: 100px;
+}
+.PasswordText{
+    padding-right: 150px;
+    padding-top: 20px;
+}
+.InputField{
+    border-radius: 4px;
+    border: 1px solid rgb(223, 223, 223);
+    width: 100%;
+    padding: 6px;
+}
+
+
+  .LoginButton{
+    padding: 6px 16px;
+    border: 1px solid rgb(223, 223, 223);;
+    width:90px;
+    height:30px;
+    border-radius: 5px;
+    background: blue;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    
+  }
+
+  .LoginButtonContainer{
+    padding-bottom: 10px;
+  }
+  .text{
+    padding-right: 10px;
+  }
+  .toggleContainer{
+    display: flex;
+    align-items: center;
+  }
+  .createAccountText{
+    color: grey;
+    text-decoration: none;
+    padding-right: 10px;
+  }
+  .createAccountText:hover{
+    color: rgb(62, 62, 62);
+    text-decoration: underline;
+  }
+  .outsideContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+  }
+  .ErrorContainer{
+    background-color: #ffc0c7;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    border-radius: 25px;
+  }
+  .HideError{
+    display: none;
+  }
+
+  .Title{
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: bold;
+  }
+  .resendButton{
+    border: none;
+    background-color: #ffc0c7;
+    padding-left:20px;
+    
+  }
+  .HideResendButton{
+    display: none;
+  }
+  .resendButton:hover{
+    cursor: pointer;
+    color: rgb(62, 62, 62);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.538);
+    font-weight: bold;
+  }
+  .SuccessContainer{
+    background-color: #c7ffc0;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top:5px;
+    padding-bottom:5px;
+    border-radius: 25px;
+  }
+    .HideSuccess{
+        display: none;
+    }
