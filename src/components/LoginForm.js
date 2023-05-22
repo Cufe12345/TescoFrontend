@@ -74,10 +74,31 @@ function LoginForm() {
   }
   function initialCheck() {
     var temp = document.getElementById("user");
-    var temp2 = temp.attributes[1]["value"];
-    if (temp2 != "null") {
+    var username = getCookie("username");
+    if (username != "" && username != null && username != undefined) {
       FetchOrders();
     }
+  }
+  function getCookie(cookie) {
+    var name = cookie + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+  function setCookie(cookie, value, days) {
+    var d = new Date();
+    d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cookie + "=" + value + ";" + expires + ";path=/";
   }
   async function complete() {
     //document.getElementById("loading").classList.remove(classes.loading);
@@ -96,6 +117,7 @@ function LoginForm() {
         console.log(test[1].Name);
         var user = document.getElementById("user");
         user.setAttribute("value", test[1].Name);
+        setCookie("username", test[1].Name, 30);
         setSuccessText("Login Successfully");
         setSuccess(true);
         FetchOrders();

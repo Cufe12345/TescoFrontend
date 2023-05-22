@@ -9,7 +9,8 @@ import SearchIcon from "../components/layout/images/SearchIcon.png";
 import { motion } from "framer-motion";
 function HomePage() {
   let navigate = useNavigate();
-  function search() {
+  function search(e) {
+    e.preventDefault();
     var userData = document.getElementById("user").attributes[2];
     console.log(userData["value"]);
     if (userData["value"] == "No order") {
@@ -39,12 +40,14 @@ function HomePage() {
           </div>
         </h1>
       </div>
-      <div className={classes.searchBar}>
-        <SearchBar className={classes.search}></SearchBar>
-        <button className={classes.button} onClick={search}>
-          <img className={classes.searchIcon} src={SearchIcon}></img>
-        </button>
-      </div>
+      <form onSubmit={search}>
+        <div className={classes.searchBar}>
+          <SearchBar className={classes.search}></SearchBar>
+          <button className={classes.button} type="submit">
+            <img className={classes.searchIcon} src={SearchIcon}></img>
+          </button>
+        </div>
+      </form>
     </motion.div>
   );
 }

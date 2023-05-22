@@ -1,5 +1,6 @@
 import OrderList from "../components/layout/Orders/OrderList";
 import classes2 from "../components/CreateAccountForm.module.css";
+import classes from "./OrdersPage.module.css";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
@@ -24,6 +25,21 @@ const testData = [
 function OnModify(title, id) {
   alert(title);
 }
+function getCookie(cookie) {
+  var name = cookie + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(";");
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == " ") {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 function Orders() {
   const { state } = useLocation();
   const { data } = state;
@@ -32,11 +48,9 @@ function Orders() {
   const [name, setResult] = useState("");
   var redirect = false;
   useEffect(() => {
-    var temp = document.getElementById("user").attributes[1];
-    console.log(temp["value"]);
-    if (temp["value"] != "null") {
-      document.getElementById("NameText").innerHTML =
-        "Welcome " + temp["value"];
+    var username = getCookie("username");
+    if (username != undefined && username != null && username != "") {
+      document.getElementById("NameText").innerHTML = "Welcome " + username;
     } else {
       redirect = true;
       navigate("/Login");
@@ -66,7 +80,10 @@ function Orders() {
             {name}
           </h1>
         </div>
-        <OrderList orders={data} />
+        <div className={classes.orders}>
+          <OrderList orders={data} past={false} />
+          <OrderList orders={data} past={true} />
+        </div>
       </div>
     );
   } else {

@@ -38,10 +38,26 @@ function BasketPageItem(props) {
     }
     setLoading(false);
   }, [name]);
+  function getCookie(cookie) {
+    var name = cookie + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
   function AddItem() {
     setPressed(true);
     var temp = document.getElementById("user").attributes[2];
-    var temp2 = document.getElementById("user").attributes[1];
+
+    var username = getCookie("username");
     const requestOptions = {
       mode: "cors",
       method: "POST",
@@ -49,13 +65,7 @@ function BasketPageItem(props) {
       body: JSON.stringify({
         type: "REMOVE",
         value:
-          props.price +
-          "," +
-          props.id +
-          "," +
-          temp["value"] +
-          "," +
-          temp2["value"],
+          props.price + "," + props.id + "," + temp["value"] + "," + username,
       }),
     };
     {

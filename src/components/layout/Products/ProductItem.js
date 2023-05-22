@@ -36,10 +36,25 @@ function ProductItem(props) {
     }
     setLoading(false);
   }, [name]);
+  function getCookie(cookie) {
+    var name = cookie + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == " ") {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
   function AddItem() {
     setPressed(true);
     var temp = document.getElementById("user").attributes[2];
-    var temp2 = document.getElementById("user").attributes[1];
+    var username = getCookie("username");
     var temp3 = document.getElementById("user").attributes[4];
     const requestOptions = {
       mode: "cors",
@@ -54,9 +69,13 @@ function ProductItem(props) {
           "," +
           temp["value"] +
           "," +
-          temp2["value"] +
+          username +
           "," +
-          temp3["value"],
+          temp3["value"] +
+          "," +
+          props.title +
+          "," +
+          props.image,
       }),
     };
     {

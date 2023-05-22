@@ -13,12 +13,29 @@ import { useContext } from "react";
 function SearchResults() {
   const ip = useContext(NetworkContext);
   const location = useLocation();
-  document.getElementById("user").setAttribute("page", location.pathname);
   let navigate = useNavigate();
+
   const inputRef = useRef(null);
   const { state } = useLocation();
   const { data } = state;
   console.log(data);
+  useEffect(() => {
+    console.log("useEffect");
+    if (document.getElementById("user") != null) {
+      if (
+        document.getElementById("user").attributes[2]["value"] != "No order"
+      ) {
+        console.log("user");
+        document.getElementById("user").setAttribute("page", location.pathname);
+      } else {
+        console.log("no user");
+        navigate("/login");
+      }
+    } else {
+      console.log("no user");
+      navigate("/login");
+    }
+  }, []);
   useEffect(() => {
     var temp = document.getElementById("user").attributes[2];
     console.log(temp["order"]);
@@ -52,7 +69,8 @@ function SearchResults() {
       complete();
     }
   }, [test]);
-  function search() {
+  function search(e) {
+    e.preventDefault();
     var userData = document.getElementById("user").attributes[2];
     console.log(userData["value"]);
     if (userData["value"] == "No order") {
@@ -190,20 +208,21 @@ function SearchResults() {
           </h1>
         </div>
         <div className={classes.searchBar}>
-          <input
-            className={classes.search}
-            type="text"
-            onSubmit={search}
-            ref={inputRef}
-          ></input>
-          <button
-            as={Link}
-            to="/Results"
-            className={classes.button}
-            onClick={search}
-          >
-            <img src={SearchIcon} width="40" height="40"></img>
-          </button>
+          <form onSubmit={search}>
+            <input
+              className={classes.search}
+              type="text"
+              ref={inputRef}
+            ></input>
+            <button
+              as={Link}
+              to="/Results"
+              className={classes.button}
+              type="submit"
+            >
+              <img src={SearchIcon} width="40" height="40"></img>
+            </button>
+          </form>
         </div>
         <ProductList items={data} />
       </div>
@@ -224,20 +243,21 @@ function SearchResults() {
         transition={{ duration: 0.75 }}
       >
         <div className={classes.searchBar}>
-          <input
-            className={classes.search}
-            type="text"
-            onSubmit={search}
-            ref={inputRef}
-          ></input>
-          <button
-            as={Link}
-            to="/Results"
-            className={classes.button}
-            onClick={search}
-          >
-            <img src={SearchIcon} width="40" height="40"></img>
-          </button>
+          <form onSubmit={search}>
+            <input
+              className={classes.search}
+              type="text"
+              ref={inputRef}
+            ></input>
+            <button
+              as={Link}
+              to="/Results"
+              className={classes.button}
+              type="submit"
+            >
+              <img src={SearchIcon} width="40" height="40"></img>
+            </button>
+          </form>
         </div>
       </div>
     );
