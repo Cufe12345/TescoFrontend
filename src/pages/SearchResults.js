@@ -10,6 +10,7 @@ import Loading from "../components/layout/Loading";
 import { motion } from "framer-motion";
 import { NetworkContext } from "../App";
 import { useContext } from "react";
+import userContext from "../contexts/userContext";
 function SearchResults() {
   const ip = useContext(NetworkContext);
   const location = useLocation();
@@ -18,15 +19,22 @@ function SearchResults() {
   const inputRef = useRef(null);
   const { state } = useLocation();
   const { data } = state;
+  const { userData } = useContext(userContext);
+  const { setUserData } = useContext(userContext);
   console.log(data);
   useEffect(() => {
     console.log("useEffect");
     if (document.getElementById("user") != null) {
-      if (
-        document.getElementById("user").attributes[2]["value"] != "No order"
-      ) {
+      if (userData.order != "No order") {
         console.log("user");
         document.getElementById("user").setAttribute("page", location.pathname);
+        setUserData({
+          order: userData.order,
+          ordertitle: userData.ordertitle,
+          query: userData.query,
+          updateBasket: userData.updateBasket,
+          page: location.pathname,
+        });
       } else {
         console.log("no user");
         navigate("/login");
@@ -37,9 +45,10 @@ function SearchResults() {
     }
   }, []);
   useEffect(() => {
-    var temp = document.getElementById("user").attributes[2];
-    console.log(temp["order"]);
-    if (temp["order"] != "null") {
+    //var temp = document.getElementById("user").attributes[2];
+    var orderId = userData.order;
+    //console.log(temp["order"]);
+    if (orderId != "null") {
       {
         /* document.getElementById("OrderText").textContent = "Modifying "+temp["order"];*/
       }
@@ -48,7 +57,7 @@ function SearchResults() {
   const [title, setTitle] = useState();
   useEffect(() => {
     if (title == null) {
-      setTitle(document.getElementById("user").attributes[3]["value"]);
+      setTitle(userData.ordertitle);
     }
   }, [title]);
   const [price, setPrice] = useState();
@@ -71,9 +80,10 @@ function SearchResults() {
   }, [test]);
   function search(e) {
     e.preventDefault();
-    var userData = document.getElementById("user").attributes[2];
+    //var userData = document.getElementById("user").attributes[2];
+    var orderId = userData.order;
     console.log(userData["value"]);
-    if (userData["value"] == "No order") {
+    if (orderId == "No order") {
       FetchOrders();
     } else {
       const requestOptions = {
@@ -96,15 +106,23 @@ function SearchResults() {
   function complete() {
     var user = document.getElementById("user");
     user.setAttribute("query", inputRef.current.value);
+    setUserData({
+      order: userData.order,
+      ordertitle: userData.ordertitle,
+      query: inputRef.current.value,
+      updateBasket: userData.updateBasket,
+      page: userData.page,
+    });
     navigate("/Results", { state: { data: test } });
   }
   function fetchBasket() {
-    var orderNum = document.getElementById("user").attributes[2]["value"];
+    //var orderNum = document.getElementById("user").attributes[2]["value"];
+    var orderId = userData.order;
     const requestOptions = {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({ type: "BASKET", orderNum }),
+      body: JSON.stringify({ type: "BASKET", orderId }),
     };
     {
       /*5.151.184.165
@@ -117,12 +135,13 @@ function SearchResults() {
       });
   }
   function fetchPrice() {
-    var orderNum = document.getElementById("user").attributes[2]["value"];
+    //var orderNum = document.getElementById("user").attributes[2]["value"];
+    var orderId = userData.order;
     const requestOptions = {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({ type: "PRICE", orderNum }),
+      body: JSON.stringify({ type: "PRICE", orderId }),
     };
     {
       /*5.151.184.165
@@ -144,14 +163,22 @@ function SearchResults() {
     navigate("/Orders", { state: { data: test2 } });
   }
   async function CheckBasket() {
-    var basketStatus = document.getElementById("user").attributes[5];
-    console.log(basketStatus["value"]);
-    if (basketStatus["value"] == "true") {
+    //var basketStatus = document.getElementById("user").attributes[5];
+    var basketStatus = userData.updateBasket;
+    //console.log(basketStatus["value"]);
+    if (basketStatus == "true") {
       document.getElementById("user").setAttribute("updateBasket", "false");
+      setUserData({
+        order: userData.order,
+        ordertitle: userData.ordertitle,
+        query: userData.query,
+        updateBasket: false,
+        page: userData.page,
+      });
       fetchBasket();
       fetchPrice();
     }
-    var page = document.getElementById("user").attributes[6]["value"];
+    var page = userData.page;
     if (page == "/Results") {
       await timeout(1000);
       CheckBasket();

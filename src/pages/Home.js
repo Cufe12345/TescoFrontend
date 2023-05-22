@@ -7,13 +7,18 @@ import { Button } from "react-bootstrap";
 import SearchBar from "../components/layout/SearchBar";
 import SearchIcon from "../components/layout/images/SearchIcon.png";
 import { motion } from "framer-motion";
+import userContext from "../contexts/userContext";
+import { useContext } from "react";
 function HomePage() {
   let navigate = useNavigate();
+  const { userData } = useContext(userContext);
+  const { setUserData } = useContext(userContext);
   function search(e) {
     e.preventDefault();
-    var userData = document.getElementById("user").attributes[2];
+    // var userData = document.getElementById("user").attributes[2];
+    var orderId = userData.order;
     console.log(userData["value"]);
-    if (userData["value"] == "No order") {
+    if (orderId == "No order") {
       navigate("/Orders", { state: { data: "" } });
     } else {
       navigate("/Results", { state: { data: "" } });

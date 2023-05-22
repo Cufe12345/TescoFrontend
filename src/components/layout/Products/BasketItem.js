@@ -4,8 +4,11 @@ import classes from "./BasketItem.module.css";
 import { useState, useEffect } from "react";
 import { NetworkContext } from "../../../App";
 import { useContext } from "react";
+import userContext from "../../../contexts/userContext";
 function BasketItem(props) {
   const ip = useContext(NetworkContext);
+  const { userData } = useContext(userContext);
+  const { setUserData } = useContext(userContext);
   const handleSubmit2 = (event) => {
     event.preventDefault();
     if (pressed == false) {
@@ -26,6 +29,13 @@ function BasketItem(props) {
         setText("DELETED!");
         var temp4 = document.getElementById("user");
         temp4.setAttribute("updateBasket", "true");
+        setUserData({
+          order: userData.order,
+          ordertitle: userData.ordertitle,
+          query: userData.query,
+          updateBasket: "true",
+          page: userData.page,
+        });
       } else {
         setText("Error");
       }
@@ -55,7 +65,9 @@ function BasketItem(props) {
   }
   function AddItem() {
     setPressed(true);
-    var temp = document.getElementById("user").attributes[2];
+    //var temp = document.getElementById("user").attributes[2];
+
+    var orderId = userData.order;
     var username = getCookie("username");
     const requestOptions = {
       mode: "cors",
@@ -63,8 +75,7 @@ function BasketItem(props) {
       headers: { "Content-Type": "text/plain" },
       body: JSON.stringify({
         type: "REMOVE",
-        value:
-          props.price + "," + props.id + "," + temp["value"] + "," + username,
+        value: props.price + "," + props.id + "," + orderId + "," + username,
       }),
     };
     {

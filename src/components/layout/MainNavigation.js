@@ -9,8 +9,11 @@ import { useState, useEffect } from "react";
 import { ReactDOM } from "react";
 import { NetworkContext } from "../../App";
 import { useContext } from "react";
+import userContext from "../../contexts/userContext";
 function MainNavigation() {
   const ip = useContext(NetworkContext);
+  const { userData } = useContext(userContext);
+  const { setUserData } = useContext(userContext);
   const inputRef = useRef(null);
   let navigate = useNavigate();
   const [test, setData] = useState();
@@ -45,6 +48,13 @@ function MainNavigation() {
   function complete() {
     var user = document.getElementById("user");
     user.setAttribute("query", inputRef.current.value);
+    setUserData({
+      order: userData.order,
+      ordertitle: userData.ordertitle,
+      query: inputRef.current.value,
+      updateBasket: userData.updateBasket,
+      page: userData.page,
+    });
     navigate("/Results", { state: { data: test } });
   }
   const [test2, setData2] = useState();

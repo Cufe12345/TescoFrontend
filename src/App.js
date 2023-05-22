@@ -11,26 +11,37 @@ import BasketPage from "./pages/Basket";
 import background from "./components/layout/images/Background.png";
 import { createContext } from "react";
 import { Helmet } from "react-helmet";
+import userContext from "./contexts/userContext";
+import { useState } from "react";
 
 export const NetworkContext = createContext();
+export const UserContext = createContext();
 function App() {
   const location = useLocation();
   let test = [{ testData: "test" }];
+  const [userData, setUserData] = useState({
+    order: "No order",
+    ordertitle: "N/A",
+    query: "N/A",
+    updatebasket: false,
+  });
   //20.58.0.170
   return (
     <div>
       <NetworkContext.Provider value={"http://20.58.0.170:8080/"}>
-        <MainNavigation />
-        <AnimatePresence exitBeforeEnter>
-          <Routes key={location.pathname} location={location}>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/Login" element={<LoginPage />} />
-            <Route path="/CreateAccount" element={<CreateAccountPage />} />
-            <Route path="/Results" element={<SearchResults />} />
-            <Route path="/Orders" element={<OrdersPage />}></Route>
-            <Route path="/Basket" element={<BasketPage />}></Route>
-          </Routes>
-        </AnimatePresence>
+        <userContext.Provider value={{ userData, setUserData }}>
+          <MainNavigation />
+          <AnimatePresence exitBeforeEnter>
+            <Routes key={location.pathname} location={location}>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/Login" element={<LoginPage />} />
+              <Route path="/CreateAccount" element={<CreateAccountPage />} />
+              <Route path="/Results" element={<SearchResults />} />
+              <Route path="/Orders" element={<OrdersPage />}></Route>
+              <Route path="/Basket" element={<BasketPage />}></Route>
+            </Routes>
+          </AnimatePresence>
+        </userContext.Provider>
       </NetworkContext.Provider>
     </div>
   );

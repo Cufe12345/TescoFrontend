@@ -4,6 +4,7 @@ import classes from "./ProductItem.module.css";
 import { useState, useEffect } from "react";
 import { NetworkContext } from "../../../App";
 import { useContext } from "react";
+import userContext from "../../../contexts/userContext";
 function ProductItem(props) {
   const ip = useContext(NetworkContext);
   const handleSubmit2 = (event) => {
@@ -16,6 +17,8 @@ function ProductItem(props) {
   const [name, setData] = useState("");
   const [buttonText, setText] = useState("Add To Order");
   const [pressed, setPressed] = useState(false);
+  const { userData } = useContext(userContext);
+  const { setUserData } = useContext(userContext);
   useEffect(() => {
     console.log(pressed);
     if (pressed == true) {
@@ -24,6 +27,13 @@ function ProductItem(props) {
         setText("Added!");
         var temp4 = document.getElementById("user");
         temp4.setAttribute("updateBasket", "true");
+        setUserData({
+          order: userData.order,
+          ordertitle: userData.ordertitle,
+          query: userData.query,
+          updateBasket: "true",
+          page: userData.page,
+        });
       } else {
         setText("Error");
       }
@@ -53,9 +63,11 @@ function ProductItem(props) {
   }
   function AddItem() {
     setPressed(true);
-    var temp = document.getElementById("user").attributes[2];
+    //  var temp = document.getElementById("user").attributes[2];
+    var orderId = userData.order;
     var username = getCookie("username");
-    var temp3 = document.getElementById("user").attributes[4];
+    // var temp3 = document.getElementById("user").attributes[4];
+    var query = userData.query;
     const requestOptions = {
       mode: "cors",
       method: "POST",
@@ -67,11 +79,11 @@ function ProductItem(props) {
           "," +
           props.price +
           "," +
-          temp["value"] +
+          orderId +
           "," +
           username +
           "," +
-          temp3["value"] +
+          query +
           "," +
           props.title +
           "," +
