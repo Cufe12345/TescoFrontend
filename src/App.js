@@ -8,6 +8,7 @@ import classes from "./index.css";
 import SearchResults from "./pages/SearchResults";
 import OrdersPage from "./pages/OrdersPage";
 import BasketPage from "./pages/Basket";
+import AdminPage from "./pages/Admin";
 import background from "./components/layout/images/Background.png";
 import { createContext } from "react";
 import { Helmet } from "react-helmet";
@@ -24,6 +25,8 @@ function App() {
     ordertitle: "N/A",
     query: "N/A",
     updatebasket: false,
+    page: location.pathname,
+    admin: false,
   });
   //20.58.0.170
   return (
@@ -39,6 +42,7 @@ function App() {
               <Route path="/Results" element={<SearchResults />} />
               <Route path="/Orders" element={<OrdersPage />}></Route>
               <Route path="/Basket" element={<BasketPage />}></Route>
+              <Route path="/Admin" element={<AdminPage />}></Route>
             </Routes>
           </AnimatePresence>
         </userContext.Provider>

@@ -17,9 +17,7 @@ function OrderList(props) {
               let currentDate = new Date();
               let extractedDate2 = item.date.split("/");
               let orderDate = new Date(date.split("/").reverse().join("/"));
-              console.log(
-                "OD: " + orderDate + " CD: " + currentDate + " OD>CD: "
-              );
+
               if (orderDate > currentDate) {
                 return null;
               }
@@ -47,9 +45,7 @@ function OrderList(props) {
               let currentDate = new Date();
               let extractedDate2 = item.date.split("/");
               let orderDate = new Date(date.split("/").reverse().join("/"));
-              console.log(
-                "OD: " + orderDate + " CD: " + currentDate + " OD<CD: "
-              );
+
               if (orderDate < currentDate) {
                 return null;
               }

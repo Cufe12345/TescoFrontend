@@ -1,5 +1,5 @@
 import BasketPageList from "../components/layout/Products/BasketPageList";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./Basket.module.css";
 import Loading from "../components/layout/Loading";
@@ -7,35 +7,44 @@ import { motion } from "framer-motion";
 import { NetworkContext } from "../App";
 import { useContext } from "react";
 import userContext from "../contexts/userContext";
+import Delivery from "../components/layout/Delivery";
+import Sort from "../components/layout/Sort";
 function Basket() {
+  const [price, setPrice] = useState("0.00");
+  const [userPrice, setUserPrice] = useState("0.00");
+  const [basket, setBasket] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [names, setNames] = useState(["callum", "test", "bob"]);
+  const [name, setName] = useState("all");
+
   let navigate = useNavigate();
   const ip = useContext(NetworkContext);
   const location = useLocation();
   const { userData } = useContext(userContext);
   const { setUserData } = useContext(userContext);
   var user = document.getElementById("user");
-  if (user != null) {
-    user.setAttribute("page", location.pathname);
+
+  useEffect(() => {
     setUserData({
       order: userData.order,
       ordertitle: userData.ordertitle,
       query: userData.query,
       updateBasket: userData.updateBasket,
       page: location.pathname,
+      admin: userData.admin,
     });
-  }
-  const [price, setPrice] = useState("0.00");
-  const [userPrice, setUserPrice] = useState("0.00");
-  const [basket, setBasket] = useState();
-  const [loading, setLoading] = useState(false);
+  }, []);
+
   useEffect(() => {
     if (basket == null) {
       if (userData.order != "No order") {
-        setLoading(true);
+        console.log("fetching basket");
+        //setLoading(true);
         fetchBasket();
         CheckBasket();
         fetchPrice();
         fetchUserPrice();
+        fetchNames();
       } else {
         navigate("/login");
       }
@@ -46,11 +55,15 @@ function Basket() {
   function fetchBasket() {
     var orderNum = document.getElementById("user").attributes[2]["value"];
 
+    console.log(name);
     const requestOptions = {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({ type: "BASKET", orderNum }),
+      body: JSON.stringify({
+        type: "BASKET",
+        value: orderNum + "," + name,
+      }),
     };
     {
       /*5.151.184.165
@@ -60,6 +73,26 @@ function Basket() {
       .then((res) => res.json())
       .then((json) => {
         setBasket(json);
+        console.log(json);
+      });
+  }
+  function fetchNames() {
+    var orderNum = document.getElementById("user").attributes[2]["value"];
+
+    const requestOptions = {
+      mode: "cors",
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({ type: "NAMES", orderNum }),
+    };
+    {
+      /*5.151.184.165
+    20.68.14.122*/
+    }
+    fetch(ip, requestOptions)
+      .then((res) => res.json())
+      .then((json) => {
+        setNames(json.Result);
         console.log(json);
       });
   }
@@ -133,6 +166,7 @@ function Basket() {
         query: userData.query,
         updateBasket: false,
         page: userData.page,
+        admin: userData.admin,
       });
       fetchBasket();
       fetchPrice();
@@ -142,12 +176,14 @@ function Basket() {
     var page = userData.page;
     if (page == "/Basket") {
       await timeout(1000);
+      console.log("checking basket2");
       CheckBasket();
     }
   }
   function timeout(delay) {
     return new Promise((res) => setTimeout(res, delay));
   }
+
   return (
     <div>
       <Loading></Loading>
@@ -159,10 +195,21 @@ function Basket() {
           Your Total: £{userPrice}
         </h1>
       </div>
+      {!userData.admin ? (
+        <div />
+      ) : (
+        <div className={classes.deliveryContainer}>
+          <Delivery names={names} setBasket={setBasket}></Delivery>
+        </div>
+      )}
+
       <div id="loading" className={loading ? classes.initial : classes.loading}>
         <Loading></Loading>
       </div>
-      <BasketPageList items={basket}></BasketPageList>
+      <div className={classes.sortContainer}>
+        <Sort names={names} setName={setName} setBasket={setBasket}></Sort>
+      </div>
+      <BasketPageList items={basket} setBasket={setBasket}></BasketPageList>
     </div>
   );
 }

@@ -1,13 +1,13 @@
 import BasketPageItem from "./BasketPageItem";
 import classes from "./BasketPageList.module.css";
 function BasketPageList(props) {
-  if (typeof props.items === "undefined") {
+  if (typeof props.items === "undefined" || props.items == null) {
     return <div></div>;
   } else {
     if (props.items.Data == "Error") {
       return <div></div>;
     }
-    console.log(props.items);
+    //console.log(props.items);
     var idN = 0;
     return (
       <ul className={classes.ul}>
@@ -21,6 +21,7 @@ function BasketPageList(props) {
                 image={item.image}
                 title={item.title}
                 price={item.price}
+                setBasket={props.setBasket}
               />
             )
           )

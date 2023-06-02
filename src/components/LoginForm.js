@@ -8,8 +8,11 @@ import Loading from "./layout/Loading";
 import { NetworkContext } from "../App";
 import { UserContext } from "../App";
 import { useContext } from "react";
+import userContext from "../contexts/userContext";
 function LoginForm() {
   const ip = useContext(NetworkContext);
+  const { userData } = useContext(userContext);
+  const { setUserData } = useContext(userContext);
   let navigate = useNavigate();
   const usernameInput = useRef();
   const passwordInput = useRef();
@@ -18,6 +21,7 @@ function LoginForm() {
   const [success, setSuccess] = useState(false);
   const [successText, setSuccessText] = useState("Logged in successfully");
   const [test, setData] = useState("");
+  const [fetching, setFetching] = useState(false);
   useEffect(() => {
     complete();
   }, [test]);
@@ -57,6 +61,7 @@ function LoginForm() {
     navigate("/Orders", { state: { data: test2 } });
   }
   function FetchOrders() {
+    setFetching(true);
     const requestOptions = {
       mode: "cors",
       method: "POST",
@@ -71,13 +76,20 @@ function LoginForm() {
       .then((res) => res.json())
       .then((json) => {
         setData2(json);
+        setFetching(false);
       });
   }
   function initialCheck() {
     var temp = document.getElementById("user");
     var username = getCookie("username");
     if (username != "" && username != null && username != undefined) {
-      FetchOrders();
+      if (!fetching && test2 == null) {
+        FetchOrders();
+      } else {
+        if (test2 != null) {
+          navigate("/Orders", { state: { data: test2 } });
+        }
+      }
     }
   }
   function getCookie(cookie) {
@@ -116,12 +128,27 @@ function LoginForm() {
       } else {
         console.log(test[0].Result);
         console.log(test[1].Name);
+        console.log(test[2].admin);
         var user = document.getElementById("user");
         user.setAttribute("value", test[1].Name);
+        setUserData({
+          order: userData.order,
+          ordertitle: userData.ordertitle,
+          query: userData.query,
+          updateBasket: userData.updateBasket,
+          page: userData.page,
+          admin: test[2].admin,
+        });
         setCookie("username", test[1].Name, 30);
         setSuccessText("Login Successfully");
         setSuccess(true);
-        FetchOrders();
+        if (!fetching && test2 == null) {
+          FetchOrders();
+        } else {
+          if (test2 != null) {
+            navigate("/Orders", { state: { data: test2 } });
+          }
+        }
         console.log("4");
       }
       await timeout(5000);

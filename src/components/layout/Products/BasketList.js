@@ -7,7 +7,7 @@ function BasketList(props) {
     if (props.items.Data == "Error") {
       return <div></div>;
     }
-    console.log(props.items);
+    //console.log(props.items);
     var idN = 0;
     return (
       <ul className={classes.ul}>

@@ -12,7 +12,14 @@ function BasketPageItem(props) {
   const handleSubmit2 = (event) => {
     event.preventDefault();
     if (pressed == false) {
-      AddItem();
+      console.log("pressed: " + userData.admin);
+      if (userData.admin == true) {
+        AddItem(true);
+        console.log("REACHED");
+      } else {
+        console.log("REACHED 2");
+        AddItem(false);
+      }
     }
   };
   function timeout(delay) {
@@ -21,6 +28,9 @@ function BasketPageItem(props) {
   const [name, setData] = useState("");
   const [buttonText, setText] = useState("Delete");
   const [pressed, setPressed] = useState(false);
+  const [updateItem, setUpdateItem] = useState(false);
+  const [query, setQuery] = useState("");
+  const [id, setId] = useState("");
   useEffect(() => {
     console.log(pressed);
     if (pressed == true) {
@@ -35,6 +45,7 @@ function BasketPageItem(props) {
           query: userData.query,
           updateBasket: "true",
           page: userData.page,
+          admin: userData.admin,
         });
       } else {
         setText("Error");
@@ -63,11 +74,14 @@ function BasketPageItem(props) {
     }
     return "";
   }
-  function AddItem() {
+  function AddItem(update) {
     setPressed(true);
     //var temp = document.getElementById("user").attributes[2];
     var orderId = userData.order;
     var username = getCookie("username");
+    if (update) {
+      username = extractName(props.title);
+    }
     const requestOptions = {
       mode: "cors",
       method: "POST",
@@ -85,11 +99,56 @@ function BasketPageItem(props) {
       .then((res) => res.json())
       .then((json) => {
         setData(json);
+        if (update) {
+          //Triggers refresh
+          props.setBasket(null);
+        }
+        props.setBasket(null);
       });
   }
   const [isLoading, setLoading] = useState(false);
 
   const handleClick = () => setLoading(true);
+  const updateSubmit = (event) => {
+    event.preventDefault();
+    updateProduct();
+  };
+
+  async function updateProduct() {
+    console.log(extractName(props.title));
+    var name = await extractName(props.title);
+    const requestOptions = {
+      mode: "cors",
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({
+        type: "UPDATE_PRODUCT",
+        value: query + "," + id + "," + userData.order + "," + name,
+      }),
+    };
+    fetch(ip, requestOptions)
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+        if (json.Result == 0) {
+          AddItem(true);
+        } else {
+          alert("Error");
+        }
+      });
+  }
+  function extractName(title) {
+    var temp = title.split(" ");
+    var result = "";
+    for (var i = 0; i < temp[0].length; i++) {
+      if (temp[0][i] == "'") {
+        break;
+      }
+      result += temp[0][i];
+    }
+    return result;
+  }
+
   return (
     <li className={classes.li}>
       <Card style={{ width: "18rem", height: "23rem" }}>
@@ -103,18 +162,68 @@ function BasketPageItem(props) {
         <Card.Body>
           <Card.Title className={classes.title}>{props.title}</Card.Title>
           <Card.Text className={classes.price}>£{props.price}</Card.Text>
-
-          <form onSubmit={handleSubmit2}>
-            <Button
-              onClick={!isLoading ? handleClick : null}
-              type="submit"
-              className={classes.button}
-              variant="primary"
-            >
-              {" "}
-              {isLoading ? "Deleting…" : buttonText}
-            </Button>
-          </form>
+          <div className={classes.buttonContainer}>
+            <form onSubmit={handleSubmit2}>
+              <Button
+                onClick={!isLoading ? handleClick : null}
+                type="submit"
+                className={classes.button}
+                variant="primary"
+              >
+                {" "}
+                {isLoading ? "Deleting…" : buttonText}
+              </Button>
+            </form>
+            {userData.admin ? (
+              <Button
+                onClick={() => {
+                  setUpdateItem(true);
+                }}
+                type="submit"
+                className={classes.button}
+                variant="primary"
+              >
+                {"Update"}
+              </Button>
+            ) : (
+              <div></div>
+            )}
+          </div>
+          {updateItem ? (
+            <div className={classes.updateContainer}>
+              <form className={classes.form} onSubmit={updateSubmit}>
+                <input
+                  type="text"
+                  placeholder="query"
+                  onChange={(e) => {
+                    setQuery(e.target.value);
+                  }}
+                  value={query}
+                />
+                <input
+                  type="text"
+                  placeholder="id"
+                  onChange={(e) => {
+                    setId(e.target.value);
+                  }}
+                  value={id}
+                />
+                <Button
+                  onClick={() => {
+                    setUpdateItem(false);
+                    updateProduct();
+                  }}
+                  type="submit"
+                  className={classes.button}
+                  variant="primary"
+                >
+                  {"Update"}
+                </Button>
+              </form>
+            </div>
+          ) : (
+            <div></div>
+          )}
         </Card.Body>
       </Card>
     </li>

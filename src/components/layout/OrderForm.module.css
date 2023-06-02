@@ -1,0 +1,10 @@
+.button{
+    background-color: blue;
+    border: none;
+}
+.success{
+    color: green;
+}
+.fail{
+    color: red;
+}

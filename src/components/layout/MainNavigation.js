@@ -54,6 +54,7 @@ function MainNavigation() {
       query: inputRef.current.value,
       updateBasket: userData.updateBasket,
       page: userData.page,
+      admin: userData.admin,
     });
     navigate("/Results", { state: { data: test } });
   }
@@ -109,6 +110,9 @@ function MainNavigation() {
           </li>
           <li>
             <Link to="/CreateAccount">CreateAccount</Link>
+          </li>
+          <li>
+            <Link to="/admin">Admin</Link>
           </li>
         </ul>
         <ul className={classes.menu1}>

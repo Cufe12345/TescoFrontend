@@ -28,3 +28,16 @@
 .buttong{
     background-color: green;
 }
+.buttonContainer{
+    display:flex;
+}
+.updateContainer{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+.form{
+    display:flex;
+    flex-direction: column;
+    padding:10px;
+}

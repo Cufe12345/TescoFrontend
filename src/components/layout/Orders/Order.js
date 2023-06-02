@@ -19,6 +19,7 @@ function Order(props) {
       query: userData.query,
       updateBasket: userData.updateBasket,
       page: userData.page,
+      admin: userData.admin,
     });
     user.setAttribute("order", props.id);
     user.setAttribute("ordertitle", props.title);

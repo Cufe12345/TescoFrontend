@@ -35,6 +35,7 @@ function BasketItem(props) {
           query: userData.query,
           updateBasket: "true",
           page: userData.page,
+          admin: userData.admin,
         });
       } else {
         setText("Error");

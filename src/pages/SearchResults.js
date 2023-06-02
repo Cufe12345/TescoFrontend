@@ -34,6 +34,7 @@ function SearchResults() {
           query: userData.query,
           updateBasket: userData.updateBasket,
           page: location.pathname,
+          admin: userData.admin,
         });
       } else {
         console.log("no user");
@@ -112,6 +113,7 @@ function SearchResults() {
       query: inputRef.current.value,
       updateBasket: userData.updateBasket,
       page: userData.page,
+      admin: userData.admin,
     });
     navigate("/Results", { state: { data: test } });
   }
@@ -122,7 +124,7 @@ function SearchResults() {
       mode: "cors",
       method: "POST",
       headers: { "Content-Type": "text/plain" },
-      body: JSON.stringify({ type: "BASKET", orderId }),
+      body: JSON.stringify({ type: "BASKET", value: orderId + ",all" }),
     };
     {
       /*5.151.184.165
@@ -174,6 +176,7 @@ function SearchResults() {
         query: userData.query,
         updateBasket: false,
         page: userData.page,
+        admin: userData.admin,
       });
       fetchBasket();
       fetchPrice();
