@@ -5,13 +5,31 @@ import classes from "./Delivery.module.css";
 import Button from "react-bootstrap/Button";
 import userContext from "../../contexts/userContext";
 import { NetworkContext } from "../../App";
+
+/**
+ * A component that displays the delivery and discount options card
+ * @param {*} props the props passed to the component ie the names of the people in the order
+ * */
 function Delivery(props) {
+  //Network context
   const ip = useContext(NetworkContext);
+
+  //User data context
   const { userData } = useContext(userContext);
 
+  //Stores the name of who to apply the delivery or discount to
   const [name, setName] = useState(props.names[0]);
+
+  //Stores the price of the delivery or discount
   const [price, setPrice] = useState(0.0);
+
+  //Stores the text to display on the add button
   const [buttonText, setButtonText] = useState("Add");
+
+
+  /**
+   * Adds the delivery or discount to the order for the user by sending a request to the backend
+   * */
   function addDelivery() {
     setButtonText("Adding");
     console.log("Pressed");
@@ -38,9 +56,12 @@ function Delivery(props) {
       });
   }
 
+  //Handles the name being changed
   const handleNameChange = (e) => {
     setName(e.target.value);
   };
+
+  //Handles the price being changed
   const handlePriceChange = (e) => {
     setPrice(e.target.value);
   };

@@ -6,17 +6,42 @@ import { useState, useEffect, useRef } from "react";
 import Loading from "./layout/Loading";
 import { NetworkContext } from "../App";
 import { useContext } from "react";
+
+/**
+ * A component that displays the Create Account Form
+ * @returns
+ * */
 function CreateAccount() {
+
+  //Stores the inputted password
   const passwordInput = useRef();
+
+  //Stores the inputted confirm password
   const confirmPasswordInput = useRef();
+
+  //Stores the inputted username
   const usernameInput = useRef();
+
+  //Stores the error text to display
   const [errorText, setErrorText] = useState("");
+
+  //Stores whether to display the error text
   const [error, setError] = useState(false);
+
+  //Stores whether to display the success text
   const [success, setSuccess] = useState(false);
+
+  //Stores the success text to display
   const [successText, setSuccessText] = useState("");
+
+  //Network context
   const ip = useContext(NetworkContext);
+
+  //Stores the result from the backend
   const [test, setData] = useState("");
   const [result, setResult] = useState("");
+
+  //When the result from the backend is updated it calls the complete function
   useEffect(() => {
     complete();
   }, [test]);
@@ -33,6 +58,10 @@ function CreateAccount() {
       [name]: value,
     }));
   };
+
+  /**
+   * Sends a request to the backend to create an account
+   * */
   async function createAccountRequest() {
     const requestOptions = {
       mode: "cors",
@@ -53,6 +82,10 @@ function CreateAccount() {
         setData(json);
       });
   }
+
+  /**
+   * Sets the error and success text and displays it
+   */
   async function complete() {
     // document.getElementById("loading").classList.remove(classes.loading);
     //document.getElementById("loading").classList.add(classes.initial);
@@ -75,6 +108,7 @@ function CreateAccount() {
   function timeout(delay) {
     return new Promise((res) => setTimeout(res, delay));
   }
+  //When the submit button is pressed it checks if the passwords match and password was provided and if so sends a request to the backend
   const submitButton = (e) => {
     e.preventDefault();
 

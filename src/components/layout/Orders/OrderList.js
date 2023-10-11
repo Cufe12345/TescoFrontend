@@ -1,6 +1,12 @@
 import classes from "../Products/ProductList.module.css";
 import classes2 from "./OrderList.module.css";
 import OrderItem from "./Order";
+
+/**
+ * A component that displays a list of orders
+ * @param {*} props the props passed to the component ie the order data
+ * @returns
+ * */
 function OrderList(props) {
   return (
     <div>

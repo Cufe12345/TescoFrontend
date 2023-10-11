@@ -9,23 +9,53 @@ import { NetworkContext } from "../App";
 import { UserContext } from "../App";
 import { useContext } from "react";
 import userContext from "../contexts/userContext";
+
+/**
+ * A component that displays the Login Form
+ * @returns
+ * */
 function LoginForm() {
+  //Network context
   const ip = useContext(NetworkContext);
+
+  //User data context
   const { userData } = useContext(userContext);
   const { setUserData } = useContext(userContext);
   let navigate = useNavigate();
+
+  //Stores reference to the inputted username
   const usernameInput = useRef();
+
+  //Stores reference to the inputted password
   const passwordInput = useRef();
+
+  //Stores the error text to display
   const [errorText, setErrorText] = useState("Invalid Login Details Provided");
+
+  //Stores whether to display the error text
   const [error, setError] = useState(false);
+
+  //Stores whether to display the success text
   const [success, setSuccess] = useState(false);
+
+  //Stores the success text to display
   const [successText, setSuccessText] = useState("Logged in successfully");
+
+  //Stores the result from the backend
   const [test, setData] = useState("");
+
   const [fetching, setFetching] = useState(false);
+
+  
+  //When the result from the backend is updated it calls the complete function
   useEffect(() => {
     complete();
   }, [test]);
   const [result, setResult] = useState("");
+
+  /**
+   * Makes a request to the backend to login
+   */
   async function LoginRequest() {
     console.log("Login Request");
     const requestOptions = {
@@ -47,9 +77,13 @@ function LoginForm() {
         setData(json);
       });
   }
+
+  //checks if the user is logged in on page load
   useEffect(() => {
     initialCheck();
   });
+
+  //Stores the result from the backend for the orders page
   const [test2, setData2] = useState(null);
   useEffect(() => {
     console.log(test2);
@@ -57,9 +91,17 @@ function LoginForm() {
       Complete();
     }
   }, [test2]);
+
+  /**
+   * Navigates to the orders page
+   * */
   function Complete() {
     navigate("/Orders", { state: { data: test2 } });
   }
+
+  /**
+   * Fetches the orders data from the backend
+   * */
   function FetchOrders() {
     setFetching(true);
     const requestOptions = {
@@ -69,8 +111,6 @@ function LoginForm() {
       body: JSON.stringify({ type: "FETCH_ORDERS" }),
     };
     {
-      /*5.151.184.165
-  20.68.14.122*/
     }
     fetch(ip, requestOptions)
       .then((res) => res.json())
@@ -79,6 +119,10 @@ function LoginForm() {
         setFetching(false);
       });
   }
+
+  /**
+   * Checks if the user is logged in ie if the username cookie is set and navigates to the orders page if they are
+   * */
   function initialCheck() {
     var temp = document.getElementById("user");
     var username = getCookie("username");
@@ -92,6 +136,12 @@ function LoginForm() {
       }
     }
   }
+
+  /**
+   * Gets the value of a cookie
+   * @param {*} cookie - the name of the cookie to get the value of
+   * @returns
+   * */
   function getCookie(cookie) {
     var name = cookie + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -107,12 +157,23 @@ function LoginForm() {
     }
     return "";
   }
+
+  /**
+   * Sets the value of a cookie
+   * @param {*} cookie - the name of the cookie to set
+   * @param {*} value - the value to set the cookie to
+   * @param {*} days - the number of days to set the cookie for
+   * */
   function setCookie(cookie, value, days) {
     var d = new Date();
     d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
     var expires = "expires=" + d.toUTCString();
     document.cookie = cookie + "=" + value + ";" + expires + ";path=/";
   }
+
+  /**
+   * Sets the errpr and success states to the login button and resets them after 5 seconds
+   * */
   async function complete() {
     //document.getElementById("loading").classList.remove(classes.loading);
     // document.getElementById("loading").classList.add(classes.initial);

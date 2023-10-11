@@ -11,8 +11,15 @@ import userContext from "../contexts/userContext";
 import { useContext } from "react";
 function HomePage() {
   let navigate = useNavigate();
+
+  //User data context
   const { userData } = useContext(userContext);
   const { setUserData } = useContext(userContext);
+
+  /**
+   * When the search button is clicked it navigates to the results page or the orders page if the user has no order
+   * @param {*} e- the event that triggered the function 
+   */
   function search(e) {
     e.preventDefault();
     // var userData = document.getElementById("user").attributes[2];

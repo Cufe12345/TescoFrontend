@@ -15,11 +15,13 @@ import { Helmet } from "react-helmet";
 import userContext from "./contexts/userContext";
 import { useState } from "react";
 
+//stores the network context so it can be accessed from anywhere
 export const NetworkContext = createContext();
 export const UserContext = createContext();
 function App() {
   const location = useLocation();
   let test = [{ testData: "test" }];
+  //stores the users data as userContext so it can be accessed from anywhere
   const [userData, setUserData] = useState({
     order: "No order",
     ordertitle: "N/A",
@@ -28,10 +30,10 @@ function App() {
     page: location.pathname,
     admin: false,
   });
-  //20.58.0.170
+
   return (
     <div>
-      <NetworkContext.Provider value={"http://20.58.0.170:8080/"}>
+      <NetworkContext.Provider value={"http://yourBackendsIP:BACKENDS_PORT/"}>
         <userContext.Provider value={{ userData, setUserData }}>
           <MainNavigation />
           <AnimatePresence exitBeforeEnter>

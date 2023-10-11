@@ -7,15 +7,24 @@ import { useNavigate } from "react-router-dom";
 import OrderForm from "../components/layout/OrderForm";
 
 function AdminPage() {
+  //user data context
   const { userData } = useContext(userContext);
   const { setUserData } = useContext(userContext);
   const [authorised, setAuthorised] = useState(false);
+
+  //network context
   const ip = useContext(NetworkContext);
   let navigate = useNavigate();
+
+  //checks if the user is an admin on page load
   useEffect(() => {
     CheckAdmin();
   }, []);
 
+  /**
+   * Gets the value of a cookie
+   * @param {string} cookie - the name of the cookie to get the value of
+   */
   function getCookie(cookie) {
     var name = cookie + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -31,6 +40,9 @@ function AdminPage() {
     }
     return "";
   }
+/**
+ * Checks if the user is an admin by checking with the backend and sets the authorised state accordingly
+ */
   function CheckAdmin() {
     const requestOptions = {
       mode: "cors",
@@ -50,6 +62,7 @@ function AdminPage() {
       .then((json) => {
         console.log(json.Result);
         setAuthorised(json.Result);
+        //if the user is an admin then set the user data to reflect this
         if (json.Result == "True") {
           setUserData({
             order: userData.order,

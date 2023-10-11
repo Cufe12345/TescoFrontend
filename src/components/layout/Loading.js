@@ -1,4 +1,8 @@
 import classes from "./Loading.module.css";
+
+/**
+ * A component that displays a loading animation
+ * */
 function Loading() {
   return (
     <div>

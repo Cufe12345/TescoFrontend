@@ -25,6 +25,12 @@ const testData = [
 function OnModify(title, id) {
   alert(title);
 }
+
+/**
+ * Fetches the value of a cookie
+ * @param {*} cookie - the name of the cookie to get the value of
+ * @returns 
+ */
 function getCookie(cookie) {
   var name = cookie + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
@@ -40,13 +46,21 @@ function getCookie(cookie) {
   }
   return "";
 }
+
+/**
+ * Generates the orders page either with the users orders or an error message
+ * @returns The Orders page
+ */
 function Orders() {
+  //gets the data from the previous page
   const { state } = useLocation();
   const { data } = state;
   let navigate = useNavigate();
   const [nameRefresh, setRefresh] = useState("");
   const [name, setResult] = useState("");
   var redirect = false;
+
+  //checks if the user is logged in and if not redirects them to the login page
   useEffect(() => {
     var username = getCookie("username");
     if (username != undefined && username != null && username != "") {
@@ -60,6 +74,7 @@ function Orders() {
     }
   }, [name]);
 
+  //if the data is not empty then display the orders otherwise display an error message
   if (data != "" && data != null && data.Data != "Error") {
     return (
       <div

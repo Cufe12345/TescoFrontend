@@ -5,10 +5,20 @@ import { useState, useEffect } from "react";
 import { NetworkContext } from "../../../App";
 import { useContext } from "react";
 import userContext from "../../../contexts/userContext";
+
+/**
+ * A component that displays an individual product in the basket
+ * @param {*} props the props passed to the component ie the product data
+ * @returns 
+ */
 function BasketItem(props) {
   const ip = useContext(NetworkContext);
+
+  //User data context
   const { userData } = useContext(userContext);
   const { setUserData } = useContext(userContext);
+
+  //Handles the delete button being pressed, naming again is bad
   const handleSubmit2 = (event) => {
     event.preventDefault();
     if (pressed == false) {
@@ -18,9 +28,17 @@ function BasketItem(props) {
   function timeout(delay) {
     return new Promise((res) => setTimeout(res, delay));
   }
+
+  //stores the result from the backend 
   const [name, setData] = useState("");
+
+  //stores the text to display on the delete button
   const [buttonText, setText] = useState("Delete");
+
+  //stores if the delete button has been pressed
   const [pressed, setPressed] = useState(false);
+
+  //When the result from the backend is updated it sets the text on the delete button to the result ie if the item was deleted or not
   useEffect(() => {
     console.log(pressed);
     if (pressed == true) {
@@ -49,6 +67,12 @@ function BasketItem(props) {
     }
     setLoading(false);
   }, [name]);
+
+  /**
+   * Gets the value of a cookie
+   * @param {*} cookie 
+   * @returns 
+   */
   function getCookie(cookie) {
     var name = cookie + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -64,6 +88,10 @@ function BasketItem(props) {
     }
     return "";
   }
+
+  /**
+   * Sends a request to the backend to delete an item from the basket, naming is bad
+   */
   function AddItem() {
     setPressed(true);
     //var temp = document.getElementById("user").attributes[2];
@@ -80,8 +108,6 @@ function BasketItem(props) {
       }),
     };
     {
-      /*5.151.184.165
-20.68.14.122*/
     }
     fetch(ip, requestOptions)
       .then((res) => res.json())
@@ -89,6 +115,8 @@ function BasketItem(props) {
         setData(json);
       });
   }
+
+  //stores if the delete button is loading ie if the request is being sent to the backend
   const [isLoading, setLoading] = useState(false);
 
   const handleClick = () => setLoading(true);

@@ -2,6 +2,10 @@
 import classes from "./SearchBar.module.css";
 import search from "./images/SearchIcon.png";
 import ref, { useRef } from "react";
+
+/**
+ * A component that displays the search bar
+ * */
 function SearchBar(){
     const inputRef = useRef(null);
     function searched(){

@@ -6,7 +6,10 @@ import { NetworkContext } from "../../../App";
 import { useContext } from "react";
 import userContext from "../../../contexts/userContext";
 function ProductItem(props) {
+  //Network context
   const ip = useContext(NetworkContext);
+
+  //Handles the add to order button being pressed
   const handleSubmit2 = (event) => {
     event.preventDefault();
     AddItem();
@@ -14,11 +17,21 @@ function ProductItem(props) {
   function timeout(delay) {
     return new Promise((res) => setTimeout(res, delay));
   }
+
+  //Stores the result from the backend
   const [name, setData] = useState("");
+
+  //Stores the text to display on the add to order button
   const [buttonText, setText] = useState("Add To Order");
+
+  //Stores if the add to order button has been pressed
   const [pressed, setPressed] = useState(false);
+
+  //User data context
   const { userData } = useContext(userContext);
   const { setUserData } = useContext(userContext);
+
+  //When the result from the backend is updated it sets the text on the add to order button to the result ie if the item was added or not
   useEffect(() => {
     console.log(pressed);
     if (pressed == true) {
@@ -47,6 +60,12 @@ function ProductItem(props) {
     }
     setLoading(false);
   }, [name]);
+
+  /**
+   * Gets the value of a cookie
+   * @param {string} cookie - the name of the cookie to get the value of
+   * @returns the value of the cookie
+   * */
   function getCookie(cookie) {
     var name = cookie + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
@@ -62,6 +81,10 @@ function ProductItem(props) {
     }
     return "";
   }
+
+  /**
+   * Adds an item to the order
+   * */
   function AddItem() {
     setPressed(true);
     //  var temp = document.getElementById("user").attributes[2];
@@ -92,8 +115,6 @@ function ProductItem(props) {
       }),
     };
     {
-      /*5.151.184.165
-20.68.14.122*/
     }
     fetch(ip, requestOptions)
       .then((res) => res.json())
@@ -101,6 +122,8 @@ function ProductItem(props) {
         setData(json);
       });
   }
+
+  //Stores if the add to order button is loading
   const [isLoading, setLoading] = useState(false);
 
   const handleClick = () => setLoading(true);

@@ -4,10 +4,20 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import userContext from "../../../contexts/userContext";
 import { useContext } from "react";
+
+/**
+ * A component that displays an order
+ * @param {*} props the props passed to the component ie the order data
+ * @returns
+ * */
 function Order(props) {
   let navigate = useNavigate();
+
+  //User data context
   const { userData } = useContext(userContext);
   const { setUserData } = useContext(userContext);
+
+  //Handles the modify order button being pressed
   const handleSubmit = (event) => {
     event.preventDefault();
 

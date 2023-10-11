@@ -4,11 +4,24 @@ import classes from "./OrderForm.module.css";
 import { Button } from "react-bootstrap";
 import { NetworkContext } from "../../App";
 import { useContext } from "react";
+
+/**
+ * A component that displays the add order card
+ * */
 function OrderForm() {
+
+  //Stores the date to add
   const [date, setDate] = useState();
+
+  //Stores the message to display if the order was added or not
   const [message, setMessage] = useState({ result: -1, message: "null" });
+
+  //Network context
   const ip = useContext(NetworkContext);
 
+  /**
+   * Adds the order to the database by sending a request to the backend
+   * */
   function AddOrder() {
     console.log(date);
     const requestOptions = {
@@ -32,6 +45,7 @@ function OrderForm() {
       });
   }
 
+  //Handles the date being changed
   const handleChange = (e) => {
     setDate(e.target.value);
   };
